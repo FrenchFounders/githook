@@ -1,0 +1,54 @@
+#!/bin/bash
+
+COMMIT_MSG=`cat $1`
+#COMMIT_MSG=$1
+
+
+if [[ $COMMIT_MSG =~ 'Merge' ]]; then
+  exit 0
+fi
+
+containsElement () {
+  local e match="$1"
+  shift
+  for e; do [[ "$e" == "$match" ]] && return 0; done
+  return 1
+}
+
+projects=("ff" "acn")
+types=("ops" "feature" "fix" "perf" "refacto" "test" "ui")
+
+
+if [[ $COMMIT_MSG =~ \[(.+):(.+)\]\ .+  ]]; then
+
+  containsElement ${BASH_REMATCH[2]} "${projects[@]}"
+
+  if [[ $? == 0 ]]; then
+
+    containsElement ${BASH_REMATCH[1]} "${types[@]}"
+
+      if [[ $? == 0 ]]; then
+        #echo "OK"
+        exit 0
+      fi
+
+      echo "Error: type has to be one of: " ${types[@]}
+      echo "Example: [feature:ff] your commit message"
+      exit 1
+
+  fi
+
+  echo "Error: project has to be one of: " ${projects[@]}
+  echo "Example: [feature:ff] your commit message"
+  exit 1
+
+
+  echo "ERROR"
+  echo "Example: [feature:ff] your commit message"
+  exit 1
+
+else
+  echo "ERROR"
+  echo "Example: [feature:ff] your commit message"
+  exit 1
+fi
