@@ -15,7 +15,7 @@ containsElement () {
   return 1
 }
 
-projects=("ff" "acn")
+projects=("ff" "acn" "all")
 types=("ops" "feature" "fix" "perf" "refacto" "test" "ui")
 
 
