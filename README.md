@@ -21,4 +21,4 @@ For type we have the followings possibilities:
 `ops` `feature` `fix` `perf` `refacto` `test` `ui`
 
 For project: 
-`ff` `acn`
+`ff` `acn` `all`
